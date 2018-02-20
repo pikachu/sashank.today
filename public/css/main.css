@@ -1,0 +1,39 @@
+body {
+	font-family: 'Open Sans', sans-serif;
+	color: white;
+}
+
+ul {
+	list-style-type: none;
+	margin: 0; 
+	padding: 0; 
+}
+
+.sashankIsFeeling {
+	text-align: center;
+	font-size: 3em;
+	margin-top: 10%;
+	font-weight: 300;
+}
+
+.feeling {
+	text-align: center;
+	font-size: 4em;
+}
+
+.updated {
+	font-size: 1em;
+	text-align: center;
+	font-weight: 200;
+	opacity: 0.5;
+}
+
+.prev {
+	font-size: 1em;
+	font-weight: 600;
+	margin-top: 8%;
+}
+
+.prevFeeling {
+	font-weight: 100;
+}

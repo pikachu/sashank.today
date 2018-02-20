@@ -1,0 +1,23 @@
+<div class="container">
+	<div class="row sashankIsFeeling">
+		today, sashank is feeling...
+	</div>
+	<div class="row feeling">
+		"{{feeling}}"
+	</div>
+	<div class="row updated">
+		last updated: {{timeStr}}
+	</div>
+	<div class="row prev">
+		previous feelings:
+		<ul>
+			{{#each feelings}}
+			<li class='prevFeeling'>{{this}}</li>
+			{{/each}}
+		</ul>
+	</div>
+</div>
+
+<script>
+document.body.style.backgroundColor = '#{{color}}'
+</script>
