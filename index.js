@@ -45,7 +45,7 @@ MONTHS[10] = "November";
 MONTHS[11] = "December";
  
 var rule = new schedule.RecurrenceRule();
-rule.hour = [23, 16, 22];
+rule.hour = [3, 8, 16]; // + 6 hours
 rule.minute = 26
 var j = schedule.scheduleJob(rule, function(){
     console.log('SENDING!');
@@ -89,7 +89,8 @@ app.get("/", function(req, res) {
             isAM = false;
         }
         if (hour == 0) hour = 12;
-        var time_str = `${MONTHS[time.getMonth()]} ${time.getDate()}, ${hour}:${time.getMinutes()} ${isAM ? 'AM' : 'PM'}`
+        var minutes = time.getMinutes < 10 ? `0${time.getMinutes()}` : time.getMinutes()
+        var time_str = `${MONTHS[time.getMonth()]} ${time.getDate()}, ${hour}:${minutes} ${isAM ? 'AM' : 'PM'}`
         Feeling.find({}, function(err, feelings) {
             if (err) throw err;
             var feelings_arr = feelings.map(x => x.feeling)
