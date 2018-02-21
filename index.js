@@ -4,7 +4,7 @@ var express = require("express");
 var exphbs = require("express-handlebars");
 var bodyParser = require("body-parser");
 var fs = require("fs");
-var PORT = 3000;
+var PORT = 8080;
 var mongoose = require("mongoose");
 var Feeling = require("./models/Feeling");
 var dotenv = require("dotenv");
@@ -45,8 +45,8 @@ MONTHS[10] = "November";
 MONTHS[11] = "December";
  
 var rule = new schedule.RecurrenceRule();
-rule.hour = [3, 8, 16]; // + 6 hours
-rule.minute = 26
+rule.hour = [15, 20, 3]; 
+rule.minute = 30
 var j = schedule.scheduleJob(rule, function(){
     console.log('SENDING!');
     client.sendMessage({
@@ -72,7 +72,7 @@ app.post("/feeling", function(req, res) {
     var f = new Feeling({ feeling: req.body.Body });
     f.save(function(err) {
         if (err) throw err;
-        return res.send("<Response><Message>Thanks! Check out sashank.today.</Message></Response>");
+        return res.send("<Response><Message>Thanks! Check out https://www.sashank.today</Message></Response>");
     });
 });
 
@@ -82,7 +82,7 @@ app.get("/", function(req, res) {
     Feeling.findOne({}, {}, { sort: { created_at: -1 } }, function(err, feeling) {
         if (err) throw err;
         var time = feeling.created_at;
-        var hour = time.getHours();
+        var hour = (time.getHours() - 5) % 24;
         var isAM = true;
         if (hour > 12) {
             hour = hour % 12;
