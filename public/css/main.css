@@ -37,3 +37,64 @@ ul {
 .prevFeeling {
 	font-weight: 100;
 }
+
+
+.mailer {
+	margin-top: 4%;
+	background-color: rgba(225, 225, 225, .8);
+	height: 150px;
+	border-radius: 15px;
+	color: grey;
+	font-weight: 100;
+}
+
+.mailerContainer {
+	padding: 5%;
+}
+
+.leftMailer {
+	width: 50%;
+	float: left;
+}
+
+.senderName {
+	font-size: 1em;
+	margin-top: 2%;
+	width: 80%;
+}
+
+.askSashank {
+	font-size: 1em;
+	font-weight: 600;
+	text-align: right;
+}
+
+.rightMailer {
+	float: left;
+	width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center; 
+}
+
+.b {
+	margin-top: 20%;
+	font-size: .8em;
+	font-weight: 100;
+	box-shadow: 2px 2px 2px #888888;
+	border-radius: 10px;
+	text-align: center;	
+	color: white;
+	line-height: 40px;
+	height: 40px;
+	width: 50%;
+}
+
+.b:active {
+	box-shadow: 0px 0px 0px #888888;
+}
+
+#responseMessage {
+	text-align: center;
+	margin-top: 5%;
+}

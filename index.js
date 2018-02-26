@@ -65,6 +65,25 @@ var j = schedule.scheduleJob(rule, function(){
     });
 });
 
+var MS_PER_MINUTE = 60000;
+var TIME_BETWEEN_TEXTS = 10;
+var last_text_sent_at = new Date(new Date().getTime() - TIME_BETWEEN_TEXTS * MS_PER_MINUTE);
+
+Date.minutesBetween = function( date1, date2 ) {
+  //Get 1 day in milliseconds
+  var one_minute=1000*60;
+
+  // Convert both dates to milliseconds
+  var date1_ms = date1.getTime();
+  var date2_ms = date2.getTime();
+
+  // Calculate the difference in milliseconds
+  var difference_ms = date2_ms - date1_ms;
+    
+  // Convert back to days and return
+  return Math.round(difference_ms/one_minute); 
+}
+
 app.post("/feeling", function(req, res) {
     if (req.body.From != process.env.SASHANK_PHONE) return;
     console.log(req.body.Body);
@@ -76,6 +95,31 @@ app.post("/feeling", function(req, res) {
     });
 });
 
+
+app.post("/someone/is/asking", function(req,res){
+    if (Date.minutesBetween(last_text_sent_at, new Date()) < 10) {
+        return res.send('TOO_SOON');
+    }
+    if (req.body.name == '') {
+        return res.send('NO_NAME');
+    }
+    client.sendMessage({
+        To: process.env.SASHANK_PHONE,  // Text this number
+        From: process.env.TWILIO_NUM,
+        Body: `${req.body.name} is wondering how you're feeling! "I am feeling ____"` // body of the SMS message
+
+    }, function(err, responseData) { //this function is executed when a response is received from Twilio
+        last_text_sent_at = new Date();
+        if (!err) { // "err" is an error received during the request, if any
+            console.log(responseData.from); // outputs "+14506667788"
+            console.log(responseData.body); // outputs "word to your mother."
+        } else {
+            console.log(err)
+        }
+    });
+    return res.send('SUCCESS');
+
+})
 
 app.get("/", function(req, res) {
     var color = COLORS[Math.floor(Math.random() * COLORS.length)];

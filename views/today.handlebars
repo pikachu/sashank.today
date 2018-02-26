@@ -9,15 +9,70 @@
 		last updated: {{timeStr}}
 	</div>
 	<div class="row prev">
-		previous feelings:
-		<ul>
-			{{#each feelings}}
-			<li class='prevFeeling'>{{this}}</li>
-			{{/each}}
-		</ul>
+		<div class="four columns">
+			previous feelings:
+			<ul>
+				{{#each feelings}}
+				<li class='prevFeeling'>{{this}}</li>
+				{{/each}}
+			</ul>
+		</div>
+		<div class="offset-by-three five columns">
+			<div class="askSashank">ask sashank how he's feeling</div>
+			<div class="mailer">
+				<div class="mailerContainer">
+					<div class="leftMailer">
+						sashank,
+						<br>
+						how are you feeling?
+						<br>
+						from,
+						<br>
+						<input class="senderName" id="senderName" placeholder="insert your name" type="text"></input>
+					</div>
+					<div class="rightMailer">
+						<div class="b" style="background-color:#{{color}}">send</div>
+					</div>
+				</div>
+			</div>
+			<div id="responseMessage">
+			</div>
+		</div>
 	</div>
 </div>
 
 <script>
 document.body.style.backgroundColor = '#{{color}}'
+$('#responseMessage').css('font-weight', '100');
+
+var error_hash = {
+	'TOO_SOON': 'Someone just asked how he was feeling. Try back later!',
+	'NO_NAME': 'You didn\'t put a name!',
+	'SUCCESS': 'Message sent! :)'
+}
+
+var color_hash = {
+	'TOO_SOON': '#D0021B',
+	'NO_NAME': '#D0021B',
+	'SUCCESS': '#202020'
+}
+
+$(".b").click(function(){
+	var name = $('#senderName').val();
+	$.post("/someone/is/asking",
+    {
+        name: name
+    },
+    function(data, status){
+    	$('#responseMessage').css('color', color_hash[data]);
+    	$('#responseMessage').text(error_hash[data]);
+    	$( "#responseMessage" ).fadeIn( "fast", function() {
+		    setTimeout(function(){ 
+	    		$( "#responseMessage" ).fadeOut( "slow", function() {
+				  }); 
+	    	}, 5000);
+			});
+   	}
+  );
+});
 </script>
