@@ -126,7 +126,7 @@ app.get("/", function(req, res) {
     Feeling.findOne({}, {}, { sort: { created_at: -1 } }, function(err, feeling) {
         if (err) throw err;
         var time = feeling.created_at;
-        var hour = (time.getHours() - 5) % 24;
+        var hour = time.getHours()  % 24;
         var isAM = true;
         if (hour > 12) {
             hour = hour % 12;
